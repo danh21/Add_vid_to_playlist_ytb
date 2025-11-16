@@ -1,6 +1,6 @@
 # 📦 Project Name
 
-> Image filtering in image processing.
+> Add Youtube videos to playlist
 
 ---
 
@@ -14,21 +14,22 @@
     - [Prerequisites](#prerequisites)
     - [Source](#source)
     - [Usage](#usage)
+- [Run](#run)
     - [Reference](#reference)
 
 ---
 
 ## 📝 About
 
-> This is a simple tool to filter image by many types.
+> App to add videos of 1 channel to personal playlist.
 
 ---
 
 ## ✨ Features
 
-- ✅ Add noise with density (Gaussian, Poisson, Salt & Pepper, Speckle)
-- ✅ Noise removal filter by size
-- ✅ Enhancement
+- ✅ Access channel Youtube
+- ✅ Add videos of that channel to personal playlist
+- ✅ Save info of added videos to cache to avoid duplicate 
 
 ---
 
@@ -37,20 +38,37 @@
 ### Prerequisites
 
 - List software dependencies or system requirements here:
-  - MATLAB
+  - Python
+  - Google cloud (Youtube Data API)
 
 ### Source
 
-- *.fig: design GUI
-- *.m: main app
+- *.py: main app
+- *.json: data
 
 ### Usage
 
-- Open file *.m in MATLAB
-- Change folder to location containing source code
-- Run
-- When app window opens, choose image file first
-- Apply custom image filters (fill mandatory parameters) and see results 
+- Access https://console.cloud.google.com/
+- Create project
+- **APIs & Services → Library,** Enable **YouTube Data API v3**
+- Config OAuth consent screen
+  - User type: **External**
+  - App name
+  - Developer contact email
+  - Save & Continue
+- Add test users (your email)
+- **APIs & Services → Credentials**; **Create Credential;** select **OAuth client ID**
+  - Application type: **Desktop App**    
+- **Download JSON** and rename to **client_secret.json**
+- pip install google-api-python-client google-auth google-auth-oauthlib
+
+# Run
+
+- Put json in same place with main.py
+- Run **python main.py**
+- Enter url of channel, e.g. ***https://www.youtube.com/c/KI%E1%BA%BENTH%E1%BB%A8CTH%C3%9AV%E1%BB%8A***
+- Enter ID playlist, e.g. *https://www.youtube.com/playlist?list=**PLnLNse3s5NStQmalyduXAU5W4_9RRAggD***
+- Verify on web browser
 
 ### Reference
 
