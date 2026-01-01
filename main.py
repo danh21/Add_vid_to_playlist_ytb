@@ -17,31 +17,20 @@ def get_uploads_playlist_id(youtube, url):
 
     if "/channel/" in url:
         channel_id = url.split("/channel/")[-1]
-    elif "/@" in url:
-        username = url.split("/@")[-1]
-        request = youtube.channels().list(part="contentDetails", forUsername=username)
-        response = request.execute()
-        items = response.get("items")
-        if not items:
-            raise ValueError(f"Not found channel with username: {username}")
-        channel_id = items[0]["id"]
-    elif "/c/" in url:
-        custom_name = url.split("/c/")[-1]
-        custom_name = urllib.parse.unquote(custom_name)  # decode URL-encoded
-        # find channelId from custom URL
+    else:
+        username = url.split("/")[-1]
+        username = urllib.parse.unquote(username)  # decode %E1%BA...
         request = youtube.search().list(
             part="snippet",
-            q=custom_name,
+            q=username,
             type="channel",
             maxResults=1
         )
         response = request.execute()
         items = response.get("items")
         if not items:
-            raise ValueError(f"Not found channel with custom URL: {custom_name}")
+            raise ValueError(f"Not found channel with username: {username}")      
         channel_id = items[0]["snippet"]["channelId"]
-    else:
-        raise ValueError("Invalid channel URL")
 
     # Now get uploads playlist from channelId
     request = youtube.channels().list(part="contentDetails", id=channel_id)
